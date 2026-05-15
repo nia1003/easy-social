@@ -26,7 +26,7 @@
     <div class="poll">
       {% if voted_option_id is not none %}
         {% for option in poll.options %}
-          <div class="poll-result {% if option.id == voted_option_id %}poll-result-voted{% endif %}">
+          <div class="poll-result {% if option.id == voted_option_id %}poll-result-voted{% endif %}" {% if option.id == voted_option_id %}aria-current="true"{% endif %}>
             <span class="poll-option-text">{{ option.text }}</span>
             <div class="poll-bar-wrap">
               <div class="poll-bar" style="width: {{ option.percentage(total) }}%"></div>
