@@ -1,0 +1,12 @@
+<form method="post" action="{{ url_for('social.create_poll') }}" class="composer poll-composer">
+  <textarea name="body" rows="2" maxlength="280" placeholder="Ask a question..." required></textarea>
+  <div class="poll-options">
+    <label>Option 1 <input name="option_1" maxlength="200" placeholder="Option 1" required></label>
+    <label>Option 2 <input name="option_2" maxlength="200" placeholder="Option 2" required></label>
+    <label>Option 3 <input name="option_3" maxlength="200" placeholder="Option 3 (optional)"></label>
+    <label>Option 4 <input name="option_4" maxlength="200" placeholder="Option 4 (optional)"></label>
+  </div>
+  <div class="composer-actions">
+    <button type="submit">Create Poll</button>
+  </div>
+</form>

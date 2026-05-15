@@ -1,10 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Feed - Easy Social{% endblock %}
+{% block title %}Feed - nia1003's Easy Social{% endblock %}
 {% block content %}
   <section class="layout">
     <div class="main-column">
       <h1>Feed</h1>
       {% include "social/_composer.html" %}
+      {% include "social/_poll_composer.html" %}
       <div class="post-list">
         {% for post in posts %}
           {% include "social/_post.html" %}
