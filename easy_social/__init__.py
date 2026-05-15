@@ -85,9 +85,20 @@ def create_app(test_config: dict | None = None) -> Flask:
             )
 
     if app.config["SQLALCHEMY_DATABASE_URI"].startswith("sqlite:///"):
-        Path(app.instance_path).mkdir(parents=True, exist_ok=True)
+        instance_dir = Path(app.instance_path)
+        try:
+            instance_dir.mkdir(parents=True, exist_ok=True)
+        except OSError:
+            tmp_dir = Path("/tmp/easy_social_instance")
+            tmp_dir.mkdir(parents=True, exist_ok=True)
+            app.config["SQLALCHEMY_DATABASE_URI"] = (
+                f"sqlite:///{tmp_dir / 'easy_social.sqlite'}"
+            )
     if app.config["MEDIA_STORAGE_BACKEND"] == "local":
-        Path(app.config["UPLOAD_FOLDER"]).mkdir(parents=True, exist_ok=True)
+        try:
+            Path(app.config["UPLOAD_FOLDER"]).mkdir(parents=True, exist_ok=True)
+        except OSError:
+            pass
 
     db.init_app(app)
     migrate.init_app(app, db)
