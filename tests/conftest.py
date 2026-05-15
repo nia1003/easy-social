@@ -32,13 +32,14 @@ def client(app):
     return app.test_client()
 
 
-def register(client, username: str, email: str | None = None, password: str = "password"):
+def register(client, username: str, email: str | None = None, password: str = "password", captcha: str = "bypass"):
     return client.post(
         "/auth/register",
         data={
             "username": username,
             "email": email or f"{username}@example.com",
             "password": password,
+            "captcha": captcha,
         },
         follow_redirects=True,
     )
