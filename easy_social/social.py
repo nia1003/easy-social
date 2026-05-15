@@ -7,7 +7,7 @@ from sqlalchemy.orm import joinedload
 
 from .extensions import db
 from .media import save_media
-from .models import Comment, Post, User, followers
+from .models import Comment, Poll, PollOption, PollVote, Post, User, followers
 
 bp = Blueprint("social", __name__)
 
@@ -189,3 +189,59 @@ def unfollow(username: str):
     current_user.unfollow(user)
     db.session.commit()
     return redirect(request.referrer or url_for("social.profile", username=user.username))
+
+
+@bp.post("/polls")
+@login_required
+def create_poll():
+    body = request.form.get("body", "").strip()
+    options_raw = [
+        request.form.get(f"option_{i}", "").strip() for i in range(1, 5)
+    ]
+    options = [o for o in options_raw if o]
+
+    if not body:
+        flash("Poll question (post body) is required.", "error")
+        return redirect(request.referrer or url_for("social.feed"))
+    if len(options) < 2:
+        flash("A poll requires at least 2 options.", "error")
+        return redirect(request.referrer or url_for("social.feed"))
+    if len(options) > 4:
+        flash("A poll may have at most 4 options.", "error")
+        return redirect(request.referrer or url_for("social.feed"))
+
+    post = Post(body=body, author=current_user, is_poll=True)
+    db.session.add(post)
+    db.session.flush()
+
+    poll = Poll(post=post)
+    db.session.add(poll)
+    db.session.flush()
+
+    for i, text in enumerate(options):
+        db.session.add(PollOption(poll=poll, text=text, position=i))
+
+    db.session.commit()
+    return redirect(url_for("social.feed"))
+
+
+@bp.post("/polls/<int:poll_id>/vote")
+@login_required
+def vote_poll(poll_id: int):
+    poll = db.get_or_404(Poll, poll_id)
+    option_id = request.form.get("option_id", type=int)
+
+    if option_id is None:
+        flash("Please select an option.", "error")
+        return redirect(request.referrer or url_for("social.feed"))
+
+    option = PollOption.query.filter_by(id=option_id, poll_id=poll_id).first_or_404()
+
+    existing = PollVote.query.filter_by(poll_id=poll_id, voter_id=current_user.id).first()
+    if existing:
+        flash("You have already voted on this poll.", "error")
+        return redirect(request.referrer or url_for("social.feed"))
+
+    db.session.add(PollVote(poll=poll, option=option, voter=current_user))
+    db.session.commit()
+    return redirect(request.referrer or url_for("social.feed"))
