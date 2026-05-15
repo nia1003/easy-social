@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Register - nia1003's Easy Social{% endblock %}
+{% block title %}Register - 李亮節's Easy Social{% endblock %}
 {% block content %}
   <section class="auth-panel">
     <h1>Create account</h1>
@@ -18,7 +18,7 @@
       </label>
       <label>
         CAPTCHA: {{ captcha_question }}
-        <input name="captcha" type="text" inputmode="numeric" autocomplete="off" required placeholder="Enter the answer">
+        <input name="captcha" type="text" inputmode="numeric" autocomplete="off" required placeholder="Enter the answer" aria-label="Answer to CAPTCHA question">
       </label>
       <button type="submit">Register</button>
     </form>
