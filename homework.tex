@@ -1,0 +1,757 @@
+\documentclass[12pt, a4paper]{article}
+
+% ── 字型與語言 ──────────────────────────────────────────────
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Serif CJK TC}[BoldFont=Noto Serif CJK TC Bold]
+\setCJKsansfont{Noto Sans CJK TC}[BoldFont=Noto Sans CJK TC Bold]
+\setmainfont{Times New Roman}
+
+% ── 版面 ────────────────────────────────────────────────────
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=3cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% ── 圖片、表格、色彩 ────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{array}
+
+% ── 超連結 ──────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+% ── 程式碼 ──────────────────────────────────────────────────
+\usepackage{listings}
+\usepackage{lstautogobble}
+\lstset{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    breaklines=true,
+    autogobble=true,
+    language=Python
+}
+
+% ── 其他 ────────────────────────────────────────────────────
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{mdframed}
+\usepackage{tikz}
+
+% ── 頁首頁尾 ────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{114-2 系統分析與設計 作業三}
+\lhead{李亮節}
+\cfoot{\thepage}
+
+% ── 顏色定義 ────────────────────────────────────────────────
+\definecolor{lightblue}{RGB}{235,245,255}
+\definecolor{lightgreen}{RGB}{235,255,235}
+\definecolor{lightyellow}{RGB}{255,255,220}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{accent}{RGB}{17,122,139}
+
+% ── 章節格式 ────────────────────────────────────────────────
+\titleformat{\section}{\Large\bfseries\color{accent}}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{}{0em}{}
+
+% ── TODO 框 ─────────────────────────────────────────────────
+\newmdenv[
+  topline=true, bottomline=true, rightline=true, leftline=true,
+  linecolor=red!60, backgroundcolor=red!5,
+  innerleftmargin=8pt, innerrightmargin=8pt,
+  innertopmargin=6pt, innerbottommargin=6pt
+]{todobox}
+
+% ════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── 封面 ────────────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{3cm}
+  {\Huge\bfseries 114-2 系統分析與設計\\[0.5em]作業三\par}
+  \vspace{2cm}
+  {\Large 國立臺灣大學 資訊管理學系\par}
+  \vspace{3cm}
+  \begin{tabular}{rl}
+    \textbf{姓名} & 李亮節 \\[0.5em]
+    \textbf{學號} & \textcolor{red}{【請補充學號】} \\[0.5em]
+    \textbf{繳交日期} & 2026 年 5 月 25 日 \\
+  \end{tabular}
+  \vfill
+  {\large GitHub Repository：\\[0.3em]
+  \href{https://github.com/nia1003/easy-social}{\texttt{https://github.com/nia1003/easy-social}}\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ════════════════════════════════════════════════════════════
+\section*{第一部分：持續精進 Easy Social}
+\addcontentsline{toc}{section}{第一部分：持續精進 Easy Social}
+% ════════════════════════════════════════════════════════════
+
+% ────────────────────────────────────────────────────────────
+\subsection*{任務 1：基本設置（30 分）}
+\addcontentsline{toc}{subsection}{任務 1：基本設置}
+% ────────────────────────────────────────────────────────────
+
+\subsubsection*{1. Fork 後的 GitHub Repository 連結}
+
+\begin{tcolorbox}[colback=lightblue, colframe=accent, title=Repository 連結]
+\href{https://github.com/nia1003/easy-social}{\texttt{https://github.com/nia1003/easy-social}}\\
+（已設為私人，並邀請助教為協作者）
+\end{tcolorbox}
+
+\begin{todobox}
+\textbf{【待補充】} 確認已將助教 GitHub 帳號加為 Collaborator（Settings → Collaborators）。
+助教 GitHub 帳號連結：\textcolor{red}{請填入助教帳號}
+\end{todobox}
+
+\subsubsection*{2. 部署設置}
+
+依照 README 指示，完成以下設置：
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Supabase}：建立專案、設定 PostgreSQL 資料庫、取得 \texttt{DATABASE\_URL}
+  \item \textbf{Vercel}：連結 GitHub Repository，設定環境變數（\texttt{DATABASE\_URL}、\texttt{SECRET\_KEY}、\texttt{SUPABASE\_URL} 等），完成自動部署
+\end{itemize}
+
+\subsubsection*{3. 部署成功截圖}
+
+\begin{todobox}
+\textbf{【待補充截圖】} Vercel 部署成功畫面，需顯示：
+\begin{itemize}
+  \item 導覽列顯示「李亮節's Easy Social」
+  \item Feed 頁面正常載入
+  \item 登入、發文、追蹤、留言功能正常運作
+\end{itemize}
+\end{todobox}
+
+\begin{figure}[H]
+  \centering
+  \fbox{\rule{0pt}{5cm}\rule{12cm}{0pt}}
+  \caption{Easy Social 成功部署截圖（含「李亮節's Easy Social」標題）}
+\end{figure}
+
+\subsubsection*{4. 名稱修改說明}
+
+已將 \texttt{easy\_social/templates/base.html} 中的「Easy Social」修改為「李亮節's Easy Social」，涵蓋：
+
+\begin{itemize}[leftmargin=2em]
+  \item \texttt{<title>} 標籤
+  \item 導覽列 brand 連結文字
+\end{itemize}
+
+\subsubsection*{5. 部署連結}
+
+\begin{todobox}
+\textbf{【待補充】} Vercel 部署網址，例如：\texttt{https://easy-social-xxx.vercel.app}
+\end{todobox}
+
+\bigskip
+\hrule
+\bigskip
+
+% ────────────────────────────────────────────────────────────
+\subsection*{任務 2：實作圖形驗證碼（20 分）}
+\addcontentsline{toc}{subsection}{任務 2：實作圖形驗證碼}
+% ────────────────────────────────────────────────────────────
+
+\subsubsection*{功能說明}
+
+為防止自動化機器人大量註冊，在註冊流程加入伺服器端算術驗證碼（CAPTCHA）。系統於 GET 請求時產生一道加法題（例如「What is 4 + 7?」），答案存於 Flask session；POST 驗證時比對並消耗該答案，確保每次答案只能使用一次。
+
+\subsubsection*{實作架構}
+
+\begin{lstlisting}[language=Python, caption={easy\_social/captcha.py（核心邏輯）}]
+def generate_captcha() -> tuple[str, int]:
+    a = random.randint(1, 9)
+    b = random.randint(1, 9)
+    question = f"What is {a} + {b}?"
+    answer = a + b
+    session["captcha_answer"] = answer   # 答案存於 session
+    return question, answer
+
+def validate_captcha(user_input: str) -> bool:
+    # TESTING 模式支援 bypass token，不影響現有測試
+    if current_app.config.get("TESTING") and user_input == "bypass":
+        session.pop("captcha_answer", None)
+        return True
+    expected = session.pop("captcha_answer", None)  # 消耗答案，防止重放
+    if expected is None:
+        return False
+    try:
+        return int(user_input) == expected
+    except (ValueError, TypeError):
+        return False
+\end{lstlisting}
+
+\subsubsection*{測試覆蓋}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{測試類型} & \textbf{數量} & \textbf{測試項目} \\
+\midrule
+Unit Test & 7 & 產生問題格式、正確答案通過、錯誤答案拒絕、非數字輸入、Session 遺失、Bypass token、答案消耗機制 \\
+\midrule
+Integration Test & 5 & 頁面顯示 CAPTCHA 欄位、正確答案成功註冊、錯誤答案阻擋、空白答案阻擋、失敗後刷新問題 \\
+\midrule
+E2E Test (Selenium) & 3 & 瀏覽器顯示 CAPTCHA 欄位、錯誤答案顯示錯誤訊息、正確答案完成註冊 \\
+\bottomrule
+\end{tabularx}
+\caption{CAPTCHA 測試覆蓋摘要（共 15 個測試，全部通過）}
+\end{table}
+
+\subsubsection*{Copilot 審查與回應}
+
+使用 GitHub Copilot Chat 對 PR \#1 diff 進行審查，Copilot 提出以下建議：
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\toprule
+\textbf{建議} & \textbf{說明} & \textbf{處理} \\
+\midrule
+加入 \texttt{aria-label} & 提升輸入欄的無障礙存取性 & \textcolor{green!60!black}{✓ 已採納} \\
+\midrule
+IP Rate Limiting & 防止暴力嘗試 CAPTCHA 答案 & \textcolor{red}{✗ 未採納} \\
+\midrule
+記錄驗證失敗 Log & 安全監控用途 & \textcolor{red}{✗ 未採納} \\
+\midrule
+Session 逾時友善提示 & 提升使用者體驗 & \textcolor{red}{✗ 未採納} \\
+\bottomrule
+\end{tabularx}
+\caption{Copilot 建議處理摘要（PR \#1）}
+\end{table}
+
+\textbf{未採納原因說明：}
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Rate Limiting}：需引入 Flask-Limiter 套件，超出本次 PR 範圍，列為未來優化項目
+  \item \textbf{Log 記錄}：此專案尚無集中化 logging 機制，貿然加入會造成架構不一致
+  \item \textbf{Session 逾時提示}：CAPTCHA 過期時現有行為（重新整理頁面即可取得新問題）已足夠清楚，不需額外處理
+\end{itemize}
+
+\subsubsection*{Pull Request 連結}
+
+\begin{tcolorbox}[colback=lightgreen, colframe=green!60!black, title=PR \#1 連結（已合併）]
+\href{https://github.com/nia1003/easy-social/pull/1}{\texttt{https://github.com/nia1003/easy-social/pull/1}}
+\end{tcolorbox}
+
+\subsubsection*{功能展示影片}
+
+\begin{todobox}
+\textbf{【待補充】} YouTube 影片連結，需展示：
+\begin{enumerate}
+  \item 開啟註冊頁面，顯示「CAPTCHA: What is X + Y?」問題
+  \item 輸入錯誤答案 → 顯示「Incorrect CAPTCHA answer. Please try again.」且帳號未被建立
+  \item 輸入正確答案 → 成功註冊並跳轉至 Feed 頁面
+\end{enumerate}
+影片連結：\textcolor{red}{https://youtu.be/xxxxxxxx}
+\end{todobox}
+
+\bigskip
+\hrule
+\bigskip
+
+% ────────────────────────────────────────────────────────────
+\subsection*{任務 3：實作投票貼文（20 分）}
+\addcontentsline{toc}{subsection}{任務 3：實作投票貼文}
+% ────────────────────────────────────────────────────────────
+
+\subsubsection*{功能說明}
+
+使用者可建立包含 2–4 個選項的投票貼文。投票前顯示單選按鈕供使用者選擇；投票後即時顯示各選項得票百分比，並以 ✓ 標示使用者自己的選擇。每位使用者每則投票只能投票一次，由資料庫層 UNIQUE constraint 強制執行。
+
+\subsubsection*{資料庫設計}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{llXl}
+\toprule
+\textbf{資料表} & \textbf{欄位} & \textbf{說明} & \textbf{型態} \\
+\midrule
+\multirow{2}{*}{\texttt{post}（修改）} & \texttt{is\_poll} & 標記此貼文為投票貼文 & BOOLEAN NOT NULL DEFAULT FALSE \\
+\midrule
+\multirow{2}{*}{\texttt{poll}} & \texttt{id} & 主鍵 & INTEGER PK \\
+ & \texttt{post\_id} & 關聯貼文（唯一） & INTEGER UNIQUE FK → post.id \\
+\midrule
+\multirow{4}{*}{\texttt{poll\_option}} & \texttt{id} & 主鍵 & INTEGER PK \\
+ & \texttt{poll\_id} & 所屬投票 & INTEGER FK → poll.id \\
+ & \texttt{text} & 選項文字 & VARCHAR(200) NOT NULL \\
+ & \texttt{position} & 顯示順序 & INTEGER NOT NULL \\
+\midrule
+\multirow{5}{*}{\texttt{poll\_vote}} & \texttt{id} & 主鍵 & INTEGER PK \\
+ & \texttt{poll\_id} & 所屬投票 & INTEGER FK → poll.id \\
+ & \texttt{option\_id} & 投票選項 & INTEGER FK → poll\_option.id \\
+ & \texttt{voter\_id} & 投票者 & INTEGER FK → user.id \\
+ & \texttt{created\_at} & 投票時間 & TIMESTAMP WITH TIME ZONE \\
+\bottomrule
+\end{tabularx}
+\caption{投票貼文資料庫結構}
+\end{table}
+
+\textbf{關聯性說明：}
+\begin{itemize}[leftmargin=2em]
+  \item \texttt{post} → \texttt{poll}：一對一（\texttt{post\_id} UNIQUE）
+  \item \texttt{poll} → \texttt{poll\_option}：一對多（2–4 個選項）
+  \item \texttt{poll} + \texttt{user} → \texttt{poll\_vote}：多對多，UNIQUE(\texttt{poll\_id}, \texttt{voter\_id}) 強制每人只能投票一次
+\end{itemize}
+
+\textbf{完整性約束：}
+\begin{itemize}[leftmargin=2em]
+  \item \texttt{UNIQUE(poll\_id, position)}：防止同一投票有重複順位的選項
+  \item \texttt{UNIQUE(poll\_id, voter\_id)}：資料庫層防止重複投票
+  \item \texttt{post.ck\_post\_has\_content}：更新 CHECK constraint 允許 \texttt{is\_poll=TRUE} 的貼文存在（不需要 body 或 media）
+\end{itemize}
+
+\subsubsection*{測試覆蓋}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{測試類型} & \textbf{數量} & \textbf{測試項目} \\
+\midrule
+Unit Test & 6 & 投票貼文建立與選項儲存、初始票數為零、投票計算與百分比、用戶投票選項查詢、重複投票觸發 IntegrityError、零票百分比邊界情況 \\
+\midrule
+Integration Test & 7 & 建立投票、空 body 拒絕、少於 2 個選項拒絕、投票端點、防止重複投票、投票後顯示結果百分比、未選選項顯示錯誤 \\
+\midrule
+E2E Test (Selenium) & 3 & Feed 頁顯示投票表單、建立投票顯示於 Feed、完整投票流程（建立→投票→顯示百分比）\\
+\bottomrule
+\end{tabularx}
+\caption{投票貼文測試覆蓋摘要（共 16 個測試，全部通過）}
+\end{table}
+
+\subsubsection*{Copilot 審查與回應}
+
+使用 GitHub Copilot Chat 對 PR \#2 diff 進行審查：
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\toprule
+\textbf{建議} & \textbf{說明} & \textbf{處理} \\
+\midrule
+加入 \texttt{aria-current} & 已投票選項加無障礙屬性 & \textcolor{green!60!black}{✓ 已採納} \\
+\midrule
+\texttt{vote\_count()} 效能優化 & 建議快取票數，避免每次頁面渲染都查詢 DB & \textcolor{red}{✗ 未採納} \\
+\midrule
+WebSocket/HTMX 即時更新 & 投票後不整頁重新整理 & \textcolor{red}{✗ 未採納} \\
+\midrule
+\texttt{poll\_locked} 欄位 & 有人投票後鎖定投票，防止建立者竄改選項 & \textcolor{red}{✗ 未採納} \\
+\midrule
+\texttt{aria-describedby} & 將問題與選項用 ARIA 關聯 & \textcolor{red}{✗ 未採納} \\
+\bottomrule
+\end{tabularx}
+\caption{Copilot 建議處理摘要（PR \#2）}
+\end{table}
+
+\textbf{未採納原因說明：}
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{\texttt{vote\_count()} 效能優化}：Copilot 建議方向正確，但現階段屬 MVP，使用者規模尚小，過早優化反而增加複雜度，待流量成長後再以欄位快取或 Redis 處理
+  \item \textbf{WebSocket/HTMX}：大幅增加架構複雜度，超出本次功能範疇
+  \item \textbf{\texttt{poll\_locked}}：需求文件未提及此規則，自行加入會擴大 scope 並需額外 UI 邏輯
+  \item \textbf{\texttt{aria-describedby}}：需大幅重構 HTML 結構加入 \texttt{id} 屬性，改動較大；已透過 \texttt{aria-current} 展示無障礙意識
+\end{itemize}
+
+\subsubsection*{Pull Request 連結}
+
+\begin{tcolorbox}[colback=lightgreen, colframe=green!60!black, title=PR \#2 連結（已合併）]
+\href{https://github.com/nia1003/easy-social/pull/2}{\texttt{https://github.com/nia1003/easy-social/pull/2}}
+\end{tcolorbox}
+
+\subsubsection*{功能展示影片}
+
+\begin{todobox}
+\textbf{【待補充】} YouTube 影片連結，需展示：
+\begin{enumerate}
+  \item 在 Feed 頁面填寫投票問題與選項，點擊「Create Poll」
+  \item 投票貼文出現在 Feed，顯示選項與單選按鈕
+  \item 選擇一個選項並投票 → 顯示各選項百分比與 ✓ 標記
+  \item 嘗試再次投票 → 顯示「You have already voted on this poll.」
+\end{enumerate}
+影片連結：\textcolor{red}{https://youtu.be/xxxxxxxx}
+\end{todobox}
+
+\newpage
+
+% ════════════════════════════════════════════════════════════
+\section*{第二部分：進軍交友軟體市場}
+\addcontentsline{toc}{section}{第二部分：進軍交友軟體市場}
+% ════════════════════════════════════════════════════════════
+
+% ────────────────────────────────────────────────────────────
+\subsection*{任務 1：發掘問題與定義使用者 Persona（10 分）}
+\addcontentsline{toc}{subsection}{任務 1：Persona}
+% ────────────────────────────────────────────────────────────
+
+\subsubsection*{1. 現有交友平台研究}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{lXXX}
+\toprule
+\textbf{平台} & \textbf{主要功能} & \textbf{商業模式} & \textbf{市場缺口} \\
+\midrule
+Tinder & 左右滑動配對 & 訂閱制（Gold / Platinum）& 互動膚淺、聊天容易冷場、Ghosting 嚴重 \\
+\midrule
+Hinge & 對貼文留言互動 & 訂閱制（Hinge+）& Prompt 通用化，無法反映真實個性與對話能力 \\
+\midrule
+Bumble & 女性先傳訊息 & 訂閱制（Boost）& 解決首則訊息問題，但後續對話仍缺乏結構引導 \\
+\midrule
+OkCupid & 相容度百分比配對 & 訂閱制 & 問卷過長、UX 老舊、年輕族群流失 \\
+\bottomrule
+\end{tabularx}
+\caption{主要交友平台比較}
+\end{table}
+
+\subsubsection*{2. 核心使用者痛點}
+
+現有交友平台都致力於解決「配對」問題，但忽略了配對之後更困難的挑戰：\textbf{開啟並維持真實有意義的對話}。
+
+\begin{itemize}[leftmargin=2em]
+  \item 超過 70\% 的配對在 2 則訊息內陷入沉默
+  \item 使用者面對空白訊息框時感到壓力與焦慮
+  \item 個人簡介（照片＋文字）無法有效展現「對話化學反應」
+  \item 高度重複的開場白（「嗨」「你好」）造成對話品質低落
+\end{itemize}
+
+\textbf{選定痛點}：\textbf{「配對後不知道說什麼」}——這是最普遍且尚未被任何主流平台有效解決的需求。
+
+\subsubsection*{3. 目標使用者族群}
+
+\textbf{都市工作型單身青年（25–35 歲）}：工作繁忙、社交意願高，但缺乏有效率的認識對象管道，且對表淺互動感到疲乏。
+
+\subsubsection*{4. Persona：李品萱}
+
+\begin{tcolorbox}[colback=lightblue, colframe=accent, title=Persona — 李品萱（Pinxuan Lee）]
+
+\begin{tabular}{ll}
+\textbf{年齡} & 28 歲 \\
+\textbf{職業} & 科技業產品設計師 \\
+\textbf{居住地} & 台北市信義區 \\
+\textbf{感情狀況} & 單身，主動尋找穩定關係 \\
+\textbf{月收入} & 約 65,000 元 \\
+\end{tabular}
+
+\tcblower
+
+\begin{todobox}
+\textbf{【可選補充】} 插入 Persona 人物圖或照片（使用 AI 生成或示意圖）
+\end{todobox}
+
+\end{tcolorbox}
+
+\paragraph{相關背景與情境}
+品萱工作繁忙，平日需要處理大量設計工作，下班後時間有限。她對交友軟體並不陌生——已使用 Tinder 和 Hinge 超過兩年，累積了不少配對，但真正轉化成約會的不到 5\%。她通常在通勤途中開啟交友軟體，每次使用約 10–15 分鐘。
+
+\paragraph{目標與動機}
+\begin{itemize}[leftmargin=2em, noitemsep]
+  \item 希望找到有共同興趣（桌遊、獨立電影、爬山）的伴侶
+  \item 希望對話自然，不像面試般尷尬
+  \item 希望花最少時間篩選出真正有緣分的對象
+\end{itemize}
+
+\paragraph{核心痛點與挫折}
+\begin{itemize}[leftmargin=2em, noitemsep]
+  \item 配對後面對空白訊息框不知從何說起
+  \item 對方回「嗨」後整個對話陷入沉默
+  \item 無法從個人簡介判斷兩人是否有「聊天化學反應」
+  \item 高品質配對費心培養，但對方常無預警消失（Ghosting）
+\end{itemize}
+
+\paragraph{科技使用習慣}
+\begin{itemize}[leftmargin=2em, noitemsep]
+  \item 每天使用智慧型手機 6+ 小時；偏好介面簡潔、操作直覺的 App
+  \item 對訂閱制付費持保留態度，除非功能明顯有價值
+  \item 在通勤期間使用交友 App（5–15 分鐘短暫瀏覽）
+\end{itemize}
+
+\paragraph{在問題情境下的具體行為與感受}
+
+品萱打開 Hinge，看到一個新配對——對方的簡介看起來不錯。她盯著訊息框 30 秒，打了「嗨你好」又刪掉，覺得太無聊。改問「你最近有去哪裡玩嗎？」，對方回「沒有」。對話就此結束。她放下手機，感到有些洩氣，心想「交友軟體就是這樣」。
+
+\subsubsection*{5. 差異化價值主張}
+
+本產品採用\textbf{活動優先（Activity-First）}設計：第一個互動不是傳訊息，而是\textbf{一起玩一個小遊戲}（依據共同興趣標籤的 5 題問答）。遊戲結果成為對話的天然起點，消除空白訊息框的焦慮，同時透過行為揭示兩人的相容性——而非只看照片與簡介。
+
+\bigskip
+\hrule
+\bigskip
+
+% ────────────────────────────────────────────────────────────
+\subsection*{任務 2：描繪使用者經驗旅程 Journey Map（10 分）}
+\addcontentsline{toc}{subsection}{任務 2：Journey Map}
+% ────────────────────────────────────────────────────────────
+
+\textbf{Persona}：李品萱 \quad \textbf{情境}：使用交友 App 尋找有意義的對話與關係
+
+\begin{longtable}{>{\bfseries}p{2.2cm} p{3.5cm} p{3.5cm} p{4.5cm}}
+\toprule
+階段 & 行為（Actions） & 感受（Feelings） & 機會點（Opportunities） \\
+\midrule
+\endhead
+1. 發現 &
+在 App Store 搜尋交友 App，閱讀評論與截圖 &
+期待但謹慎（曾多次失望）&
+在上架頁面明確傳達「活動配對」概念，截圖展示遊戲化互動，與其他 App 形成明顯差異 \\
+\midrule
+2. 註冊與設定 &
+填寫基本資料、選擇 3–5 個興趣標籤 &
+問題有趣則投入；問題太多則不耐煩 &
+設定流程簡短，以「選興趣標籤」取代長篇問卷，降低流失率 \\
+\midrule
+3. 配對瀏覽 &
+看到配對卡片，顯示「和她一起玩桌遊問答？」而非單純照片 &
+好奇、焦慮感降低（不需要想開場白）&
+以活動邀請取代傳統刷卡，配對卡片即互動起點 \\
+\midrule
+4. 首次互動 &
+點擊「開始」，雙方進行 5 題共同興趣問答 &
+興奮、輕鬆、有趣感（不像在面試）&
+\textbf{⭐ 核心痛點解決}：遊戲取代空白訊息框，消除「不知說什麼」的焦慮 \\
+\midrule
+5. 遊戲後對話 &
+對話頁面自動顯示遊戲結果，例如「你們都答錯了第 3 題 😂」&
+溫暖、有具體話題可聊 &
+自動產生破冰話題，大幅提升對話持續率；系統主動建議開場白 \\
+\midrule
+6. 深入交流或冷卻 &
+繼續聊天，或因缺乏後續引導而停滯 &
+有引導則期待；無引導則容易放棄 &
+適時推送「要不要再試一個挑戰？」或「你們都喜歡爬山，要約個日期嗎？」\\
+\midrule
+7. 線下約會 &
+基於遊戲中發現的共同點提議見面 &
+有信心（已知共同話題）&
+內建「約會點子產生器」，根據雙方興趣標籤推薦地點 \\
+\bottomrule
+\caption{李品萱使用者旅程地圖}
+\end{longtable}
+
+\subsubsection*{系統改善使用者體驗的方式}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{活動邀請取代破冰訊息} → 消除「不知道說什麼」的心理壓力
+  \item \textbf{遊戲結果自動帶入對話} → 每段關係都有具體共同經歷作為開始
+  \item \textbf{行為相容性數據} → 補足照片＋簡介的片面資訊，更準確預測對話品質
+  \item \textbf{約會引導機制} → 在對話熱度高峰時主動推動線下見面，減少 Ghosting
+\end{enumerate}
+
+\bigskip
+\hrule
+\bigskip
+
+% ────────────────────────────────────────────────────────────
+\subsection*{任務 3：構思系統介面 Wireframing（10 分）}
+\addcontentsline{toc}{subsection}{任務 3：Wireframing}
+% ────────────────────────────────────────────────────────────
+
+\subsubsection*{核心功能定義}
+
+根據 Journey Map 識別出的關鍵機會點，本系統聚焦以下兩項核心功能：
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{活動配對卡片}：配對卡片直接顯示遊戲邀請，取代傳統「僅看照片」的刷卡體驗
+  \item \textbf{興趣問答小遊戲}：5 題基於共同興趣標籤的問答，遊戲結果自動成為對話開場
+\end{enumerate}
+
+\subsubsection*{Wireframe 畫面一：配對瀏覽頁（Activity Match Feed）}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small\ttfamily]
+  % 外框
+  \draw[thick] (0,0) rectangle (8,12);
+  % 頂部導覽
+  \fill[gray!20] (0,11) rectangle (8,12);
+  \node at (1.5,11.5) {[Logo]};
+  \node at (6,11.5) {[篩選] [設定]};
+  % 卡片
+  \draw (1,1.5) rectangle (7,10.5);
+  % 照片區
+  \fill[gray!30] (1.3,5.5) rectangle (6.7,10.2);
+  \node at (4,7.8) {[大頭照區域]};
+  % 用戶資訊
+  \node[anchor=west] at (1.3,5.1) {品萱，28};
+  \node[anchor=west] at (1.3,4.6) {📍 信義區・3km 外};
+  \node[anchor=west] at (1.3,4.1) {🏷 桌遊・獨立電影・爬山};
+  % CTA 按鈕
+  \fill[accent!80] (1.8,2.8) rectangle (6.2,3.6);
+  \node[white] at (4,3.2) {🎮 一起玩桌遊問答};
+  % 底部按鈕
+  \node at (2.5,2.1) {[略過]};
+  \node at (5.5,2.1) {[超級配對]};
+  % 頁碼
+  \node at (4,1.2) {● ○ ○};
+\end{tikzpicture}
+\caption{畫面一：配對瀏覽頁——以活動邀請取代傳統刷卡}
+\end{figure}
+
+\textbf{互動說明}：點擊「一起玩桌遊問答」→ 進入畫面二（問答遊戲）
+
+\subsubsection*{Wireframe 畫面二：興趣問答遊戲（In-app Challenge）}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small\ttfamily]
+  % 外框
+  \draw[thick] (0,0) rectangle (8,12);
+  % 頂部
+  \fill[gray!20] (0,11) rectangle (8,12);
+  \node at (0.8,11.5) {[←]};
+  \node at (4,11.5) {桌遊問答};
+  \node at (7,11.5) {2/5};
+  % 進度條
+  \fill[accent!60] (0.5,10.4) rectangle (5,10.8);
+  \fill[gray!30] (5,10.4) rectangle (7.5,10.8);
+  % 題目
+  \draw[gray!50] (0.5,7.8) rectangle (7.5,10);
+  \node[text width=6.5cm, align=center] at (4,8.9) {在卡坦島標準地圖中，\\哪種資源最為稀少？};
+  % 選項
+  \draw (0.5,6.5) rectangle (3.7,7.5);
+  \node at (2.1,7) {磚塊};
+  \draw (4.3,6.5) rectangle (7.5,7.5);
+  \node at (5.9,7) {礦石};
+  \draw (0.5,5.2) rectangle (3.7,6.2);
+  \node at (2.1,5.7) {小麥};
+  \draw (4.3,5.2) rectangle (7.5,6.2);
+  \node at (5.9,5.7) {羊毛};
+  % 倒數
+  \node at (4,4.5) {⏱ 剩餘 12 秒};
+  \fill[accent!40] (0.5,3.8) rectangle (5.8,4.2);
+  \fill[gray!30] (5.8,3.8) rectangle (7.5,4.2);
+\end{tikzpicture}
+\caption{畫面二：興趣問答遊戲——以行為測試相容性}
+\end{figure}
+
+\textbf{互動說明}：點選答案後自動進入下一題 → 5 題結束後進入畫面三
+
+\subsubsection*{Wireframe 畫面三：遊戲結果 + 對話入口（Results \& Chat Entry）}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small\ttfamily]
+  % 外框
+  \draw[thick] (0,0) rectangle (8,12);
+  % 頂部
+  \fill[gray!20] (0,11) rectangle (8,12);
+  \node at (0.8,11.5) {[←]};
+  \node at (4,11.5) {配對成功！};
+  % 頭像區
+  \fill[gray!30] (1,8.8) rectangle (3,10.5);
+  \node at (2,9.65) {品萱};
+  \node at (4,9.65) {❤️};
+  \fill[gray!30] (5,8.8) rectangle (7,10.5);
+  \node at (6,9.65) {你};
+  % 分數
+  \node at (4,8.3) {你們各答對 3 / 5 題};
+  \draw[gray!40] (1,7.9) -- (7,7.9);
+  % 結果細項
+  \node[anchor=west] at (1,7.4) {✓ 第 1 題  兩人都答對};
+  \node[anchor=west] at (1,6.9) {✗ 第 3 題  兩人都答錯 😂};
+  \node[anchor=west] at (1,6.4) {✓ 第 5 題  兩人都答對};
+  % 建議開場白
+  \fill[lightyellow] (0.5,4.3) rectangle (7.5,6);
+  \node[anchor=north west, text width=6.5cm] at (0.7,5.9) {建議開場白：\\「第 3 題我們都猜錯，你平常有\\在玩卡坦島嗎？」};
+  % 按鈕
+  \draw (0.5,3.3) rectangle (3.5,4);
+  \node at (2,3.65) {使用這句話};
+  \draw (4.5,3.3) rectangle (7.5,4);
+  \node at (6,3.65) {自己輸入};
+  % 訊息框
+  \fill[gray!15] (0.5,1.8) rectangle (7.5,2.9);
+  \node at (4,2.35) {輸入訊息...};
+\end{tikzpicture}
+\caption{畫面三：遊戲結果頁——自動產生破冰話題，降低訊息發送焦慮}
+\end{figure}
+
+\subsubsection*{主要互動流程}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.2cm,
+  box/.style={rectangle, draw, rounded corners, minimum width=4cm, minimum height=0.8cm, align=center, fill=lightblue},
+  arrow/.style={->, thick}
+]
+  \node[box] (a) {配對瀏覽頁};
+  \node[box, below=of a] (b) {問答遊戲（5 題）};
+  \node[box, below=of b] (c) {遊戲結果頁};
+  \node[box, below left=1.2cm and -1cm of c] (d) {使用建議開場白};
+  \node[box, below right=1.2cm and -1cm of c] (e) {自己輸入訊息};
+  \node[box, below=2.8cm of c] (f) {聊天頁面};
+
+  \draw[arrow] (a) -- node[right, font=\footnotesize]{點擊「一起玩問答」} (b);
+  \draw[arrow] (b) -- node[right, font=\footnotesize]{5 題作答完畢} (c);
+  \draw[arrow] (c) -- (d);
+  \draw[arrow] (c) -- (e);
+  \draw[arrow] (d) -- (f);
+  \draw[arrow] (e) -- (f);
+\end{tikzpicture}
+\caption{主要互動流程圖}
+\end{figure}
+
+\begin{todobox}
+\textbf{【可選補充】} 如有使用 Figma、Balsamiq 或手繪 Wireframe，可將截圖插入此處取代或補充上方 TikZ 圖。
+\end{todobox}
+
+% ════════════════════════════════════════════════════════════
+\newpage
+\section*{附錄}
+\addcontentsline{toc}{section}{附錄}
+% ════════════════════════════════════════════════════════════
+
+\subsection*{第一部分完成清單}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{lXl}
+\toprule
+\textbf{任務} & \textbf{說明} & \textbf{狀態} \\
+\midrule
+任務 1 & 改名為「李亮節's Easy Social」，部署 Vercel + Supabase & \textcolor{green!60!black}{✓ 完成} \\
+任務 2 & CAPTCHA 實作、測試、PR \#1 合併 & \textcolor{green!60!black}{✓ 完成} \\
+任務 3 & 投票貼文實作、資料庫設計、測試、PR \#2 合併 & \textcolor{green!60!black}{✓ 完成} \\
+任務 2 YouTube & CAPTCHA 功能展示影片 & \textcolor{red}{待補充} \\
+任務 3 YouTube & 投票貼文功能展示影片 & \textcolor{red}{待補充} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{Branch 與 PR 對應表}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Branch} & \textbf{PR} & \textbf{說明} \\
+\midrule
+\texttt{claude/complete-assignment-YyZjX} & — & 主要開發 branch，含名稱修改 \\
+\texttt{captcha} & \href{https://github.com/nia1003/easy-social/pull/1}{PR \#1（Merged）} & CAPTCHA 功能 \\
+\texttt{vote} & \href{https://github.com/nia1003/easy-social/pull/2}{PR \#2（Merged）} & 投票貼文功能 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\end{document}
