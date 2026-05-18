@@ -103,6 +103,9 @@ def create_app(test_config: dict | None = None) -> Flask:
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
+
+    with app.app_context():
+        db.create_all()
     login_manager.login_view = "auth.login"
 
     @login_manager.user_loader
