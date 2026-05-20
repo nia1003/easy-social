@@ -39,7 +39,7 @@ def _validate_database_url(database_url: str) -> None:
 
 
 def _database_url() -> str:
-    database_url = os.environ.get("DATABASE_URL")
+    database_url = os.environ.get("DATABASE_URL") or os.environ.get("POSTGRES_URL")
     if not database_url:
         return ""
     _validate_database_url(database_url)
@@ -64,7 +64,7 @@ def create_app(test_config: dict | None = None) -> Flask:
     app = Flask(__name__, instance_relative_config=True)
     database_url = _database_url()
     app.config.from_mapping(
-        SECRET_KEY=os.environ.get("SECRET_KEY", "dev-secret-key"),
+        SECRET_KEY=os.environ.get("SECRET_KEY", "easy-social-secret-2026"),
         SQLALCHEMY_DATABASE_URI=database_url
         or f"sqlite:///{Path(app.instance_path) / 'easy_social.sqlite'}",
         SQLALCHEMY_ENGINE_OPTIONS=_engine_options(database_url),
