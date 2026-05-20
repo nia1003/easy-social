@@ -92,8 +92,8 @@ def create_post():
 
     try:
         media_filename, media_type = save_media(request.files.get("media"))
-    except ValueError as exc:
-        flash(str(exc), "error")
+    except (ValueError, OSError) as exc:
+        flash(str(exc) if isinstance(exc, ValueError) else "Media upload is not available in this environment.", "error")
         return redirect(request.referrer or url_for("social.feed"))
 
     if not body and not media_filename:
