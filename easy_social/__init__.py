@@ -105,7 +105,10 @@ def create_app(test_config: dict | None = None) -> Flask:
     login_manager.init_app(app)
 
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+        except Exception:
+            pass
     login_manager.login_view = "auth.login"
 
     @login_manager.user_loader
