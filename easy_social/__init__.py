@@ -104,11 +104,15 @@ def create_app(test_config: dict | None = None) -> Flask:
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
-    with app.app_context():
-        try:
-            db.create_all()
-        except Exception:
-            pass
+    # Only auto-create tables for SQLite (local/fallback). PostgreSQL tables
+    # are managed via migrations; running create_all on every cold start adds
+    # unnecessary latency on Vercel serverless.
+    if app.config["SQLALCHEMY_DATABASE_URI"].startswith("sqlite"):
+        with app.app_context():
+            try:
+                db.create_all()
+            except Exception:
+                pass
     login_manager.login_view = "auth.login"
 
     @login_manager.user_loader
