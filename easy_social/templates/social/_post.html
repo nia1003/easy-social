@@ -36,6 +36,10 @@
           </div>
         {% endfor %}
         <p class="poll-meta muted">{{ total }} vote{{ 's' if total != 1 }}</p>
+        <form method="post" action="{{ url_for('social.vote_poll', poll_id=poll.id) }}" class="poll-vote-form" style="margin-top:0.5rem">
+          <input type="hidden" name="option_id" value="{{ voted_option_id }}">
+          <button type="submit" class="poll-vote-btn" style="font-size:0.75rem;padding:0.2rem 0.6rem;opacity:0.6">Vote again</button>
+        </form>
       {% else %}
         <form method="post" action="{{ url_for('social.vote_poll', poll_id=poll.id) }}" class="poll-vote-form">
           {% for option in poll.options %}
